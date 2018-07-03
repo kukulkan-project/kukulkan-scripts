@@ -20,11 +20,15 @@ info "Running on : $path"
 
 function mainScript() {
 if $update ; then
-update
+executeCommand "git pull" "Updating"
 fi
 
 if $branches ; then
-showBranchesInfo
+executeCommand "mvn clean install -DskipTests"
+fi
+
+if $compile ; then
+executeCommand "mvn clean install -DskipTests" "Compiling"
 fi
 
 if $init ; then
@@ -33,77 +37,48 @@ fi
 }
 
 function clone(){
-cd $path
-git clone git@github.com:kukulkan-project/kukulkan-shell.git
-git clone git@github.com:kukulkan-project/kukulkan-grammar.git
-git clone git@github.com:kukulkan-project/kukulkan-generator-angularjs.git
-git clone git@github.com:kukulkan-project/kukulkan-engine.git
-git clone git@github.com:kukulkan-project/kukulkan-metamodel.git
+read -p "Are you sure? " -n 1 -r
+echo    # move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  cd $path
+  git clone git@github.com:kukulkan-project/kukulkan-shell.git
+  git clone git@github.com:kukulkan-project/kukulkan-grammar.git
+  git clone git@github.com:kukulkan-project/kukulkan-generator-angularjs.git
+  git clone git@github.com:kukulkan-project/kukulkan-engine.git
+  git clone git@github.com:kukulkan-project/kukulkan-metamodel.git
+fi
 }
 
-function showBranchesInfo(){
-cd $path
-cd 'kukulkan-grammar/' || exit
-GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
-info "kukulkan-grammar : $GIT_BRANCH"
-if [ $? -eq 0 ]; then
-    cd '../kukulkan-metamodel/' || exit
-    GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
-    info "kukulkan-metamodel : $GIT_BRANCH"
-    if [ $? -eq 0 ]; then
-        cd '../kukulkan-engine/' || exit
-        GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
-        info "kukulkan-engine : $GIT_BRANCH"
-        if [ $? -eq 0 ]; then
-            cd '../kukulkan-generator-angularjs' || exit
-            GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
-            info "kukulkan-generator-angularjs : $GIT_BRANCH"
-            if [ $? -eq 0 ]; then
-                cd '../kukulkan-shell/' || exit
-                GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
-                info "kukulkan-shell : $GIT_BRANCH"
-                if [ $? -eq 0 ]; then
-                    success "kukulkan branches"
-                else
-                    error "kukulkan-shell"
-                fi
-            else
-                 error "kukulkan-generator-angularjs"
-            fi
-        else
-            error "kukulkan-engine"
-        fi
-    else
-        error "kukulkan-metamodel"
-    fi
+
+
+function evalCommand(){
+if [[ -z "$3" ]]; then
+  MESSAGE=$(git rev-parse --abbrev-ref HEAD);
+  info "$2 : $MESSAGE"
 else
-    error "kukulkan-grammar"
-fi  
-}
+  info "$2 :: $3"
+  eval $1
+fi }
 
-function update(){
+function executeCommand(){
 cd $path
 cd 'kukulkan-grammar/' || exit
-info "Updating ... kukulkan-grammar"
-git pull
+evalCommand "$1" "kukulkan-grammar" $2
 if [ $? -eq 0 ]; then
     cd '../kukulkan-metamodel/' || exit
-    info "Updating ... kukulkan-metamodel"
-    git pull
+    evalCommand "$1" "kukulkan-metamodel" $2 
     if [ $? -eq 0 ]; then
         cd '../kukulkan-engine/' || exit
-        info "Updating ... kukulkan-engine"
-        git pull
+        evalCommand "$1" "kukulkan-engine" $2
         if [ $? -eq 0 ]; then
             cd '../kukulkan-generator-angularjs' || exit
-            info "Updating ... kukulkan-generator-angularjs"
-            git pull
+            evalCommand "$1" "kukulkan-generator-angularjs" $2
             if [ $? -eq 0 ]; then
                 cd '../kukulkan-shell/' || exit
-                info "Updating ... kukulkan-shell"
-                git pull
+                evalCommand "$1" "kukulkan-shell" $2
                 if [ $? -eq 0 ]; then
-                    success "kukulkan project build"
+                    success "kukulkan project :: $2"
                 else
                     error "kukulkan-shell"
                 fi
@@ -151,8 +126,9 @@ force=false
 strict=false
 debug=false
 init=false
-branches=false;
+branches=false
 update=false
+compile=false
 args=()
 
 # Set Colors
@@ -188,6 +164,7 @@ This script is used for kukulkan project initial configuration.
       --path        Path to kukulkan project
   -i, --init        Download all master projects
   -u, --update      Updating all projects
+  -c, --comple      Compiling all projects
   -b, --branches    Show all repository and branches
   -h, --help        Display this help and exit
       --version     Output version information and exit
@@ -245,6 +222,7 @@ while [[ $1 = -?* ]]; do
       echo ;;
     -v|--verbose) verbose=true ;;
     -u|--update) update=true ;;
+    -c|--compile) compile=true ;;
     -i|--init) init=true ;;
     -b|--branches) branches=true ;;
     -l|--log) printLog=true ;;
