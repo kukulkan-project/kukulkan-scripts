@@ -8,21 +8,34 @@ $ ./kukulkan.sh -h
 ```
 
 
+## Establecer la ruta en la que se descargaron los proyectos de kukulkan
+
+```sh
+$ ./kukulkan.sh --path ../
+```
+
+
 ## Descargar los proyectos de kukulkan
 
 ```sh
-$ ./kukulkan.sh -init
+$ ./kukulkan.sh -init --path /path/to/projects
 ```
 
 ## Actualizar todos los proyectos
 
 ```sh
-$ ./kukulkan.sh -u
+$ ./kukulkan.sh -u --path /path/to/projects
 ```
 
 
 ## Mostrar la rama en la que se encuentra cada proyecto
 
 ```sh
-$ ./kukulkan.sh -b
+$ ./kukulkan.sh -b --path /path/to/projects
+```
+
+## Mostrar compilar los proyectos
+
+```sh
+$ ./kukulkan.sh -c --path /path/to/projects
 ```
