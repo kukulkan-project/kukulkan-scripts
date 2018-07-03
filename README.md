@@ -17,8 +17,9 @@ $ ./kukulkan.sh --path ../
 
 ## Descargar los proyectos de kukulkan
 
+
 ```sh
-$ ./kukulkan.sh -init --path /path/to/projects
+$ ./kukulkan.sh -init
 ```
 
 ## Actualizar todos los proyectos
