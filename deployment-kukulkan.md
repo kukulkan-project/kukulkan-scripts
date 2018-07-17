@@ -17,6 +17,10 @@ Julio 17 del 2018
 | ANALISTA   DE NEGOCIO           |  8 |      0      |     0%     |
 | ANALISTA   DE SOFTWARE          | 12 |      0      |     0%     |
 
+## Resumen de Roles
+![Avance](avance-04.PNG)
 
+## Avance
 ![Avance](avance-01.PNG)
 ![Avance](avance-02.PNG)
+
