@@ -63,11 +63,21 @@ fi }
 
 function executeCommand(){
 cd $path
-cd 'kukulkan-grammar/' || exit
-evalCommand "$1" "kukulkan-grammar" $2
+if $compile ; then
+PATH_TO_PROCESS='kukulkan-language-server/mx.infotec.dads.kukulkan.dsl.parent/'
+CMD_PROCESS="./gradlew install"
+else
+PATH_TO_PROCESS='kukulkan-language-server/'
+CMD_PROCESS="$1"
+fi
+cd "$PATH_TO_PROCESS" || exit
+evalCommand "$CMD_PROCESS" "kukulkan-language-server" $2
+if $compile ; then
+cd ../
+fi 
 if [ $? -eq 0 ]; then
     cd '../kukulkan-metamodel/' || exit
-    evalCommand "$1" "kukulkan-metamodel" $2 
+    evalCommand "$1" "kukulkan-metamodel" $2
     if [ $? -eq 0 ]; then
         cd '../kukulkan-engine/' || exit
         evalCommand "$1" "kukulkan-engine" $2
