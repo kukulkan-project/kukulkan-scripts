@@ -12,7 +12,7 @@ version="1.0.0"              # Sets version variable
 
 function setupGlobalVariables(){
 if [ -z "$path" ]; then
-path=$(pwd);
+path="../";
 info "Change path using path variable"
 fi
 info "Running on : $path"
