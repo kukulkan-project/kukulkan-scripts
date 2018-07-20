@@ -19,6 +19,11 @@ info "Running on : $path"
 }
 
 function mainScript() {
+
+if $runshell ; then
+runShell
+fi
+
 if $update ; then
 executeCommand "git pull" "Updating"
 fi
@@ -60,6 +65,10 @@ else
   info "$2 :: $3"
   eval $1
 fi }
+function runShell() {
+ cd '../kukulkan-shell/kukulkan-shell-terminal/' || exit
+ mvn spring-boot:run -DskipTests
+}
 
 function executeCommand(){
 cd $path
@@ -139,6 +148,7 @@ init=false
 branches=false
 update=false
 compile=false
+runshell=false
 args=()
 
 # Set Colors
@@ -176,6 +186,7 @@ This script is used for kukulkan project initial configuration.
   -u, --update      Updating all projects
   -c, --comple      Compiling all projects
   -b, --branches    Show all repository and branches
+  -r  --runshell    Run the kukulkan shell
   -h, --help        Display this help and exit
       --version     Output version information and exit
 "
@@ -235,6 +246,7 @@ while [[ $1 = -?* ]]; do
     -c|--compile) compile=true ;;
     -i|--init) init=true ;;
     -b|--branches) branches=true ;;
+    -r|--runshell) runshell=true ;;
     -l|--log) printLog=true ;;
     -q|--quiet) quiet=true ;;
     -s|--strict) strict=true;;
