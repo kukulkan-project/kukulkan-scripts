@@ -55,8 +55,6 @@ then
 fi
 }
 
-
-
 function evalCommand(){
 if [[ -z "$3" ]]; then
   MESSAGE=$(git rev-parse --abbrev-ref HEAD);
