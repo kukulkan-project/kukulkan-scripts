@@ -2,7 +2,7 @@
 Desarrollar la capacidad interna de la DADS, en el uso de la herramienta de kukulkan
 
 # Corte al:
-Julio 17 del 2018
+Agosto 31 del 2018
 
 # Resumen de Capacitación
 
