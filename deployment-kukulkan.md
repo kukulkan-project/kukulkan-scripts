@@ -11,7 +11,7 @@ Julio 17 del 2018
 |    INGENIERO   DE SOFTWARE      | 30 |      2      |     7%     |
 | LÍDER DE   EQUIPO               |  7 |      0      |     0%     |
 | ARQUITECTO   DE SOFTWARE        | 11 |      4      |     36%    |
-| DESARROLLADOR                   |  6 |      1      |     17%     |
+| DESARROLLADOR                   |  6 |      3      |     50%     |
 |    COORDINADOR   DE DESARROLLO  |  1 |      0      |     0%     |
 |    ESPECIALISTA   EN SEGURIDAD  |  1 |      0      |     0%     |
 | ANALISTA   DE NEGOCIO           |  8 |      0      |     0%     |
