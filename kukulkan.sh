@@ -53,6 +53,7 @@ then
   git clone git@github.com:kukulkan-project/kukulkan-engine.git
   git clone git@github.com:kukulkan-project/kukulkan-metamodel.git
   git clone git@github.com:kukulkan-project/kukulkan-language-server.git
+  git clone https://github.com/robertovillarejo/inflector.git
 fi
 }
 
@@ -84,30 +85,36 @@ if $compile ; then
 cd ../
 fi 
 if [ $? -eq 0 ]; then
-    cd '../kukulkan-metamodel/' || exit
-    evalCommand "$1" "kukulkan-metamodel" $2
+    cd '../inflector/' || exit
+    evalCommand "$1" "inflector" $2
     if [ $? -eq 0 ]; then
-        cd '../kukulkan-engine/' || exit
-        evalCommand "$1" "kukulkan-engine" $2
+        cd '../kukulkan-metamodel/' || exit
+        evalCommand "$1" "kukulkan-metamodel" $2
         if [ $? -eq 0 ]; then
-            cd '../kukulkan-generator-angularjs' || exit
-            evalCommand "$1" "kukulkan-generator-angularjs" $2
+            cd '../kukulkan-engine/' || exit
+            evalCommand "$1" "kukulkan-engine" $2
             if [ $? -eq 0 ]; then
-                cd '../kukulkan-shell/' || exit
-                evalCommand "$1" "kukulkan-shell" $2
+                cd '../kukulkan-generator-angularjs' || exit
+                evalCommand "$1" "kukulkan-generator-angularjs" $2
                 if [ $? -eq 0 ]; then
-                    success "kukulkan project :: $2"
+                    cd '../kukulkan-shell/' || exit
+                    evalCommand "$1" "kukulkan-shell" $2
+                    if [ $? -eq 0 ]; then
+                        success "kukulkan project :: $2"
+                    else
+                        error "kukulkan-shell"
+                    fi
                 else
-                    error "kukulkan-shell"
+                    error "kukulkan-generator-angularjs"
                 fi
             else
-                 error "kukulkan-generator-angularjs"
+                error "kukulkan-engine"
             fi
         else
-            error "kukulkan-engine"
-        fi
+            error "kukulkan-metamodel"
+      fi
     else
-        error "kukulkan-metamodel"
+        error "inflector"
     fi
 else
     error "kukulkan-grammar"
