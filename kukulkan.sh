@@ -52,6 +52,7 @@ then
   git clone git@github.com:kukulkan-project/kukulkan-generator-angularjs.git
   git clone git@github.com:kukulkan-project/kukulkan-engine.git
   git clone git@github.com:kukulkan-project/kukulkan-metamodel.git
+  git clone git@github.com:kukulkan-project/kukulkan-language-server.git
 fi
 }
 
